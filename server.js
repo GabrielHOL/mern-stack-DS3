@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config()
 
+const path = require("path")
+
 const taskController = require('./controller/task.controller')
 
 
@@ -27,18 +29,20 @@ app.delete('/api/task/:id', (req, res) => {
     taskController.deleteTask(req.params.id).then(data => res.json(data));
 });
 
-const path = require("path")
+
 
 // ... other app.use middleware 
 app.use(express.static(path.join(__dirname, "client", "build")))
 
 // ...
 // Right before your app.listen(), add this:
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
-app.listen(...)
+app.listen(port, () => {
+    console.log(`Server listening on the port  ${port}`);
+})
 
 // const path = require('path');
 // const express = require('express');
